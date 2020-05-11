@@ -38,24 +38,3 @@ export function submitCard(title, card){
       }));
     });
 }
-
-/*export function fetchCards(){
-  return AsyncStorage.getItem( CARD_STORAGE_KEY )
-  .then((cards) => (JSON.parse(cards)));
-}
-
-export function submitCard({ card, key }){
-  return AsyncStorage.mergeItem( CARD_STORAGE_KEY, JSON.stringify({
-    [ key ] : card,
-  }));
-}
-
-export function removeCard( key ){
-  return AsyncStorage.getItem( CARD_STORAGE_KEY )
-    .then(( results ) => {
-      const cards = JSON.parse( results );
-      cards[ key ] = undefined;
-      delete cards[ key ];
-      AsyncStorage.setItem( CARD_STORAGE_KEY, JSON.stringify( cards ));
-    });
-}*/

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { styles } from '../utils/style';
 
-const styles = StyleSheet.create({
+/*const styles = StyleSheet.create({
   all: {
     flex:1,
     padding:5,
@@ -44,54 +45,68 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: 'center'
   }
-})
+})*/
 
 class Quiz extends Component{
   state ={
     showAnswer: false,
     counter:0,
     correctCounter:0
-  }
+  };
 
   switch = () => {
     this.setState((currentState) =>({
       showAnswer: !currentState.showAnswer
-    }))
-  }
+    }));
+  };
 
   next = () => {
     this.setState((currentState) =>({
       counter: currentState.counter+1
-    }))
-  }
+    }));
+  };
 
   correct = () => {
     this.setState((currentState) => ({
       correctCounter: currentState.correctCounter+1
-    }))
-    this.next()
-  }
+    }));
+    this.next();
+  };
 
   render(){
     const { deck } = this.props;
     const { counter } = this.state;
     return(
-      <View style={{flex:1, justifyContent:'center',alignItems:'center',margin:8}}>
+      <View style={styles.generalView}>
         {
           deck.questions.length===0 ?
-            <Text style={{textAlign:"center", fontSize:30}}>Cant take a quiz with no Questions</Text>
+            <Text style={{textAlign:"center", fontSize:30}}>
+              Cant take a quiz with no Questions
+            </Text>
             :counter===deck.questions.length ?
-              <Text style={{textAlign:"center", fontSize:30}}>You played all cards and gave {this.state.correctCounter}</Text>:
-              <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                <Text style={{fontSize:16,margin:20}}>Card: {counter+1}/{deck.questions.length}</Text>
-                <Text style={{textAlign:"center", fontSize:30}}>{!this.state.showAnswer ? deck.questions[counter].question:deck.questions[counter].answer}</Text>
+              <Text style={{textAlign:"center", fontSize:30}}>
+                You played all cards and you choose {this.state.correctCounter} out of {deck.questions.length} cards as correct
+              </Text>:
+              <View>
+                <Text style={{fontSize:16,margin:20,textAlign:'center'}}>
+                  Card: {counter+1}/{deck.questions.length}
+                </Text>
+                <Text style={{textAlign:"center", fontSize:30}}>
+                  {!this.state.showAnswer ? deck.questions[counter].question
+                    :deck.questions[counter].answer}
+                </Text>
                 <TouchableOpacity onPress={this.switch}>
-                  <Text style={{fontSize:16, textAlign:"center", marginVertical:30, color:"red"}}>{!this.state.showAnswer ? 'Show Answer': 'Show Question'}</Text>
+                  <Text style={{fontSize:16, textAlign:"center", 
+                    marginVertical:30, color:"red"}}>
+                    {!this.state.showAnswer ? 'Show Answer': 'Show Question'}
+                  </Text>
                 </TouchableOpacity >
-                <TouchableOpacity onPress={this.correct} style={{...styles.androidSubmitBtn,backgroundColor:'green',paddingHorizontal:30}}>
-                  <Text style={{fontSize:30,color:'white'}}>Correct</Text>
+                <TouchableOpacity onPress={this.correct} 
+                  style={{...styles.button,backgroundColor:'green',paddingHorizontal:30}}>
+                  <Text style={{...styles.buttonText,fontSize:30}}>Correct</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.next} style={{...styles.androidSubmitBtn,backgroundColor:'red'}}>
+                <TouchableOpacity onPress={this.next} 
+                  style={{...styles.button,backgroundColor:'red'}}>
                   <Text style={{fontSize:30}}>Incorrect</Text>
                 </TouchableOpacity>
               </View>

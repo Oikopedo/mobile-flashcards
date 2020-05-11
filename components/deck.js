@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 export default function Deck ({ title, questions }) {
-  console.log(title);
-  console.log(questions);
+  //console.log(title);
+  //console.log(questions);
   return (
     <View style={{marginVertical:20}}>
       <View style={{alignItems:"center"}}>

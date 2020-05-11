@@ -18,7 +18,7 @@ export function addDeck(title){
         title: title,
         questions: []
       }
-    },
+    }
   };
 }
 

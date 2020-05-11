@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native'; 
 
 export default class Card extends Component{
@@ -18,4 +18,4 @@ export default class Card extends Component{
       </View>
     );
   }
-}
+}*/
