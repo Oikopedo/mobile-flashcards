@@ -33,7 +33,7 @@ class Home extends Component{
       <View style={{flex:1}}>
         {values.length === 0 ?
         <View style={styles.generalView}>
-          <Text style={{fontSize:30, textAlign:"center"}}>There are no decks, please add a deck</Text>
+          <Text style={{ fontSize:30, textAlign:"center" }}>There are no decks, please add a deck</Text>
         </View>:
         <View>
           <FlatList data={values} renderItem={this.renderDeck} keyExtractor={(item) => (item.title)}/>

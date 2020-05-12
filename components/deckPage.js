@@ -10,7 +10,7 @@ function DeckPage(props){
 
   const { dispatch, navigation, deck } = props;
 
-  onAdd = () => {
+  const onAdd = () => {
     navigation.navigate(
       'AddCard',
       { deckTitle: deck.title }
@@ -18,13 +18,13 @@ function DeckPage(props){
   }
   
 
-  onDelete = () => {
+  const onDelete = () => {
     navigation.goBack();
     dispatch(deleteDeck(deck.title));
     deleteDeckTitle(deck.title);
   };
 
-  onQuiz = () => {
+  const onQuiz = () => {
     navigation.navigate(
       'Quiz',
       { deckTitle: deck.title }
@@ -37,11 +37,11 @@ function DeckPage(props){
       <View>
           <Deck { ...deck }/>
           <TouchableOpacity style={{ ...styles.button, backgroundColor:'green',
-            paddingHorizontal: 25}} onPress={onAdd}>
+            paddingHorizontal: 25 }} onPress={onAdd}>
             <Text style={styles.buttonText}>Add Card</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{ ...styles.button, backgroundColor: 'purple',
-            paddingHorizontal: 25}} onPress={onQuiz}>
+            paddingHorizontal: 25 }} onPress={onQuiz}>
             <Text style={styles.buttonText}>Start Quiz</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{ ...styles.button, backgroundColor:'red' }}

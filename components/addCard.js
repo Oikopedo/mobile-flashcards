@@ -12,15 +12,6 @@ import { connect } from 'react-redux';
 import { addCard } from '../actions';
 import { styles } from '../utils/style'
 
-export function SubmitBtn({ onPress }){
-  return (
-    <TouchableOpacity style={{...styles.button,backgroundColor: 'purple'}}
-      onPress = {onPress}>
-      <Text style = {{...styles.buttonText,fontSize: 22}}>SUBMIT</Text>
-    </TouchableOpacity>
-  )
-}
-
 class AddCard extends Component{
 
   state = {
@@ -30,7 +21,7 @@ class AddCard extends Component{
 
   onChangeText = (key, text) =>{
     this.setState({
-      [key] : text,
+      [key]: text,
     });
   };
 
@@ -65,7 +56,10 @@ class AddCard extends Component{
             />
           </KeyboardAvoidingView>
         ))}
-        <SubmitBtn onPress = {this.submit}/>
+        <TouchableOpacity style={{ ...styles.button, backgroundColor: 'purple' }}
+          onPress = {this.submit}>
+          <Text style = {{ ...styles.buttonText, fontSize: 22 }}>SUBMIT</Text>
+        </TouchableOpacity>
       </View>
     );
   }

@@ -4,16 +4,17 @@ import { View,
   Text, 
   KeyboardAvoidingView, 
   TextInput,
-  Keyboard
+  Keyboard,
+  TouchableOpacity
 } from 'react-native';
 import { saveDeckTitle } from '../utils/api';
 import { addDeck } from '../actions';
-import { SubmitBtn } from './addCard';
 import { styles } from '../utils/style';
 
 class AddDeck extends Component{
+
   state={
-    title:""
+    title: ''
   };
 
   submit = () => {
@@ -40,7 +41,7 @@ class AddDeck extends Component{
     saveDeckTitle(title);
 
     this.setState({
-      title:""
+      title: ''
     });
 
   };
@@ -48,13 +49,17 @@ class AddDeck extends Component{
   render(){
     return (
       <View style={styles.generalView}>
-        <Text style={{fontSize:16, textAlign:"center", marginVertical:20}}>
+        <Text style={{ fontSize: 16, textAlign: "center", marginVertical: 20 }}>
           What is the title of your new deck?
         </Text>
         <KeyboardAvoidingView behavior="padding">
-          <TextInput defaultValue={this.state.title} style={styles.inputStyle} onChangeText={(text) => (this.setState({ title:text }))}/>
+          <TextInput defaultValue={this.state.title} style={styles.inputStyle} 
+            onChangeText={(text) => (this.setState({ title: text }))}/>
         </KeyboardAvoidingView>
-        <SubmitBtn onPress={this.submit}/>
+        <TouchableOpacity style={{ ...styles.button, backgroundColor: 'purple' }}
+          onPress = {this.submit}>
+          <Text style = {{ ...styles.buttonText, fontSize: 22 }}>Create Deck</Text>
+        </TouchableOpacity>
       </View>
     );
   }

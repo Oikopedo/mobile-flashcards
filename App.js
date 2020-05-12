@@ -26,16 +26,16 @@ const options = {
 
 function CustomStatusBar({ backgroundColor, ...props }){
   return (
-    <View style={{backgroundColor, height: Constants.statusBarHeight}}>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props}/>
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} { ...props }/>
     </View>
   );
 }
 
 function HomeTab(){
   return (
-    <Tab.Navigator  tabBarOptions={{activeTintColor: 'white',
-      style: {backgroundColor: 'purple'}}}>
+    <Tab.Navigator  tabBarOptions={{ activeTintColor: 'white',
+      style: { backgroundColor: 'purple' }}}>
       <Tab.Screen name="Decks" component={Home} />
       <Tab.Screen name="AddDeck" component={AddDeck} />
     </Tab.Navigator>
@@ -46,14 +46,14 @@ export default function App() {
 
   return (
     <Provider store={createStore(reducer)}>
-      <View style={{flex:1}}>
+      <View style={{ flex: 1 }}>
         <CustomStatusBar backgroundColor='purple' barStyle='light-content'/>
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeTab} 
-              options={{headerShown: false}}/>
+              options={{ headerShown: false }}/>
             <Stack.Screen name="DeckPage" component={DeckPage} 
-              options={{...options, title: ''}}/>
+              options={{ ...options, title: '' }}/>
             <Stack.Screen name="AddCard" component={AddCard} 
               options={({ route }) => ({ title: 'Add Card to '
               +route.params.deckTitle, ...options })}/>
