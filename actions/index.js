@@ -3,7 +3,7 @@ export const ADD_DECK = 'ADD_DECK';
 export const DELETE_DECK = 'DELETE_DECK';
 export const ADD_CARD = 'ADD_CARD';
 export const QUIZ_QUESTION = 'QUIZ_QUESTION';
-export const REMOVE_QUIZ = 'REMOVE_QUIZ';
+export const RESET_QUIZ = 'RESET_QUIZ';
 
 export function receiveDecks(decks){
   return {
@@ -16,10 +16,8 @@ export function addDeck(title){
   return {
     type: ADD_DECK,
     deck: {
-      [title]: {
-        title: title,
-        questions: []
-      }
+      title: title,
+      questions: []
     }
   };
 }
@@ -47,9 +45,9 @@ export function quizQuestion(title,correct){
   };
 }
 
-export function removeQuiz(title){
+export function resetQuiz(title){
   return{
-    type: REMOVE_QUIZ,
+    type: RESET_QUIZ,
     title,
   };
 }

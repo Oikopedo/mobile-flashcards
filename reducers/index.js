@@ -4,60 +4,81 @@ import {
   DELETE_DECK, 
   ADD_CARD, 
   QUIZ_QUESTION, 
-  REMOVE_QUIZ
+  RESET_QUIZ
 } from "../actions";
 
-export default function decks(state = {}, action){
-  let newState;
+export default function decks(state = { decks: [], quiz: {} }, action){
   switch (action.type){
     case RECEIVE_DECKS:
+      const quiz = {}
+      Object.keys(action.decks).forEach((title) => {
+        quiz[title]= {
+          counter: 0, 
+          correctCounter: 0
+        };
+      })
       return {
         ...state,
-        ...action.decks,
+        decks: [ ...state.decks, ...Object.values(action.decks) ],
+        quiz:{
+          ...state.quiz, 
+          ...quiz,
+        }
       };
     case ADD_DECK:
       return {
         ...state,
-        ...action.deck,
+        decks: [ ...state.decks, action.deck ],
+        quiz: {
+          ...state.quiz,
+          [action.deck.title]: {
+            counter: 0,
+            correctCounter: 0
+          }
+        }
       };
     case DELETE_DECK:
-      newState = {
+      return {
         ...state,
+        decks: state.decks.filter((deck) => (deck.title !== action.title)),
+        quiz: {
+          ...state.quiz,
+          [action.title]: undefined
+        }
       };
-      newState[action.title] = undefined;
-      delete newState[action.title];
-      return newState;
     case ADD_CARD:
       return {
         ...state,
-        [action.title]: {
-          ...state[action.title],
-          questions: [...state[action.title].questions, action.card]
-        }
+        decks: state.decks.map((deck) => (deck.title === action.title ? { 
+          ...deck,
+          questions: [ ...deck.questions, action.card ]
+        } : deck ))
       };
     case QUIZ_QUESTION:
-      return {
+      return{
         ...state,
-        [action.title]: {
-          ...state[action.title],
-          quiz: state[action.title].quiz ? {
-            counter: state[action.title].quiz.counter + 1,
+        quiz: {
+          ...state.quiz,
+          [action.title]: {
+            counter: state.quiz[action.title].counter+1,
             correctCounter: action.correct ? 
-              state[action.title].quiz.correctCounter + 1 : 
-              state[action.title].quiz.correctCounter
-          } : {
-            counter: 1,
-            correctCounter: action.correct ? 1 : 0
+              state.quiz[action.title].correctCounter+1 : 
+              state.quiz[action.title].correctCounter
           }
         }
-      }
-    case REMOVE_QUIZ:
-      newState = {
+      };
+      
+    case RESET_QUIZ:
+      return {
         ...state,
-      }
-      newState[action.title].quiz = undefined;
-      delete newState[action.title].quiz;
-      return newState;
+        quiz: {
+          ...state.quiz,
+          [action.title]: {
+            counter: 0,
+            correctCounter: 0
+          }
+        }
+      };
     default:
       return state;
   }

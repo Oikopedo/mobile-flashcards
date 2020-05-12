@@ -34,8 +34,7 @@ class Game extends Component{
   
   render(){
 
-    const { deck } = this.props;
-    const counter = deck.quiz ? deck.quiz.counter : 0;
+    const { deck, counter } = this.props;
 
     return(
       <View>
@@ -65,10 +64,10 @@ class Game extends Component{
   }
 }
 
-function mapStateToProps(decks, { deckTitle }){
-  const deck = decks[deckTitle];
+function mapStateToProps({ decks, quiz }, { deckTitle }){
   return{
-    deck,
+    deck: decks.filter((deck) => (deckTitle === deck.title))[0],
+    counter: quiz[deckTitle].counter
   }
 }
 

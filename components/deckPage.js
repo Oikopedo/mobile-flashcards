@@ -6,59 +6,52 @@ import { deleteDeck } from '../actions';
 import { deleteDeckTitle } from '../utils/api';
 import { styles } from '../utils/style';
 
-function DeckPage(props){
-
-  const { dispatch, navigation, deck } = props;
+function DeckPage({ dispatch, navigation, deckTitle }){
 
   const onAdd = () => {
     navigation.navigate(
       'AddCard',
-      { deckTitle: deck.title }
+      { deckTitle }
     )
   }
   
 
   const onDelete = () => {
     navigation.goBack();
-    dispatch(deleteDeck(deck.title));
-    deleteDeckTitle(deck.title);
+    dispatch(deleteDeck(deckTitle));
+    deleteDeckTitle(deckTitle);
   };
 
   const onQuiz = () => {
     navigation.navigate(
       'Quiz',
-      { deckTitle: deck.title }
+      { deckTitle }
     )
   }
 
   return (
     <View style={styles.generalView}>
-      {typeof deck !== "undefined" && (
-      <View>
-          <Deck { ...deck }/>
-          <TouchableOpacity style={{ ...styles.button, backgroundColor:'green',
-            paddingHorizontal: 25 }} onPress={onAdd}>
-            <Text style={styles.buttonText}>Add Card</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ ...styles.button, backgroundColor: 'purple',
-            paddingHorizontal: 25 }} onPress={onQuiz}>
-            <Text style={styles.buttonText}>Start Quiz</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{ ...styles.button, backgroundColor:'red' }}
-            onPress={onDelete}>
-            <Text style={styles.buttonText}>Delete Deck</Text>
-          </TouchableOpacity>
-      </View>
-      )}
+      <Deck deckTitle={deckTitle}/>
+      <TouchableOpacity style={{ ...styles.button, backgroundColor:'green',
+        paddingHorizontal: 25 }} onPress={onAdd}>
+        <Text style={styles.buttonText}>Add Card</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={{ ...styles.button, backgroundColor: 'purple',
+        paddingHorizontal: 25 }} onPress={onQuiz}>
+        <Text style={styles.buttonText}>Start Quiz</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={{ ...styles.button, backgroundColor:'red' }}
+        onPress={onDelete}>
+        <Text style={styles.buttonText}>Delete Deck</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
-function mapStateToProps(decks, { route }){
+function mapStateToProps(_, { route }){
   const { deckTitle } = route.params;
-  const deck = decks[deckTitle];
   return {
-    deck,
+    deckTitle,
   }
 }
 

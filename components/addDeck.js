@@ -19,20 +19,20 @@ class AddDeck extends Component{
 
   submit = () => {
 
-    if (this.state.title===""){
+    const { dispatch, navigation, quiz } = this.props;
+    const { title } = this.state;
+
+    if (title === ''){
       alert("Cant submit an empty title");
       return;
     }
 
-    if (this.props.decks[this.state.title]!==undefined){
+    if (quiz[title]){
       alert("This deck already exists, please choose another title");
       return;
     }
 
     Keyboard.dismiss();
-
-    const { dispatch, navigation } = this.props;
-    const { title } = this.state;
 
     navigation.goBack();
 
@@ -65,9 +65,9 @@ class AddDeck extends Component{
   }
 }
 
-function mapStateToProps(decks){
+function mapStateToProps({ quiz }){
   return {
-    decks,
+    quiz,
   };
 }
 

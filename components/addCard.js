@@ -27,6 +27,13 @@ class AddCard extends Component{
 
   submit = () => {
 
+    const { question, answer } = this.state;
+
+    if (question === '' || answer === ''){
+      alert('Question and Answer must be filled');
+      return;
+    }
+
     Keyboard.dismiss();
 
     const { dispatch, deckTitle, navigation } = this.props;

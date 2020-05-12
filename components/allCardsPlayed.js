@@ -2,20 +2,17 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { styles } from '../utils/style';
 import { View, Text, TouchableOpacity} from 'react-native';
-import { removeQuiz } from '../actions/index';
+import { resetQuiz } from '../actions/index';
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
 
-function AllCardsPlayed(props){
+function AllCardsPlayed({ deck, dispatch, navigation, correctCounter }){
 
   useEffect(() => {
     clearLocalNotification().then(setLocalNotification);
   });
-  
-  const { deck, dispatch, navigation } = props;
 
   const restart = () => {
-    dispatch(removeQuiz(deck.title));
-    navigation.navigate('Quiz', { deckTitle: deck.title });
+    dispatch(resetQuiz(deck.title));
   }
 
   const toHome = () => {
@@ -29,7 +26,7 @@ function AllCardsPlayed(props){
   return(
     <View>
       <Text style={{ textAlign:"center", fontSize: 30, marginVertical: 30 }}>
-        You played all cards and you choose {deck.quiz.correctCounter} out of {deck.questions.length} cards as correct
+        You played all cards and you choose {correctCounter} out of {deck.questions.length} cards as correct
       </Text>
       <TouchableOpacity onPress={restart} 
         style={{ ...styles.button, backgroundColor: 'green', paddingHorizontal: 25 }}>
@@ -47,9 +44,10 @@ function AllCardsPlayed(props){
   );
 }
 
-function mapStateToProps(decks, { deckTitle, navigation }){
+function mapStateToProps({ decks, quiz }, { deckTitle, navigation }){
   return ({
-    deck: decks[deckTitle],
+    deck: decks.filter((deck) => (deck.title === deckTitle))[0],
+    correctCounter: quiz[deckTitle].correctCounter,
     navigation,
   })
 }

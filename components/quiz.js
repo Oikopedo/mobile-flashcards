@@ -5,31 +5,29 @@ import { styles } from '../utils/style';
 import AllCardsPlayed from './allCardsPlayed';
 import Game from './game';
 
-function Quiz(props){
-
-  const { deck, navigation } = props;
-  const counter = deck.quiz ? deck.quiz.counter : 0;
+function Quiz({ deckTitle, navigation, length, counter }){
 
   return(
     <View style={styles.generalView}>
       {
-        deck.questions.length === 0 ?
+        length === 0 ?
           <Text style={{ textAlign: "center", fontSize: 30 }}>
             Cant take a quiz with no Questions
           </Text>
-          :counter === deck.questions.length ?
-            <AllCardsPlayed deckTitle={deck.title} navigation={navigation}/>:
-            <Game deckTitle={deck.title}/>
+          :counter === length ?
+            <AllCardsPlayed deckTitle={deckTitle} navigation={navigation}/>:
+            <Game deckTitle={deckTitle}/>
       }
     </View>
   );
 }
 
-function mapStateToProps(decks, { route }){
+function mapStateToProps({ decks, quiz }, { route }){
   const { deckTitle } = route.params;
-  const deck = decks[deckTitle];
   return {
-    deck,
+    length: decks.filter((deck) => (deck.title === deckTitle))[0].questions.length,
+    counter: quiz[deckTitle].counter,
+    deckTitle,
   };
 }
 

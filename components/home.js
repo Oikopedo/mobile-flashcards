@@ -6,15 +6,11 @@ import { connect } from 'react-redux';
 import { receiveDecks } from '../actions/index'
 import { styles } from '../utils/style';
 
-function Home(props){
+function Home({ dispatch, navigation, decks }){
 
   useEffect(() => {
     getDecks().then((decks) => dispatch(receiveDecks(decks)));
   }, []);
-
-  const { dispatch, navigation, decks } = props;
-
-  const values = Object.values(decks)
 
   const renderDeck = ({ item })  => {
     return (
@@ -27,19 +23,19 @@ function Home(props){
   };
 
   return (
-    <View style={{flex:1}}>
-      {values.length === 0 ?
+    <View style={{ flex:1 }}>
+      {decks.length === 0 ?
       <View style={styles.generalView}>
         <Text style={{ fontSize:30, textAlign:"center" }}>There are no decks, please add a deck</Text>
       </View>:
       <View>
-        <FlatList data={values} renderItem={renderDeck} keyExtractor={(item) => (item.title)}/>
+        <FlatList data={decks} renderItem={renderDeck} keyExtractor={(item) => (item.title)}/>
       </View>}
     </View>
   );
 }
 
-function mapStateToProps(decks){
+function mapStateToProps({ decks }){
   return{
     decks,
   };
