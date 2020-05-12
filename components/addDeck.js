@@ -33,6 +33,8 @@ class AddDeck extends Component{
     const { dispatch, navigation } = this.props;
     const { title } = this.state;
 
+    navigation.goBack();
+
     dispatch(addDeck(title));
 
     saveDeckTitle(title);
@@ -41,7 +43,6 @@ class AddDeck extends Component{
       title:""
     });
 
-    navigation.goBack();
   };
 
   render(){

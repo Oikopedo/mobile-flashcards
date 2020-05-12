@@ -4,7 +4,8 @@ import {
   TextInput, 
   TouchableOpacity, 
   Text, 
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Keyboard
 } from 'react-native';
 import { submitCard } from '../utils/api';
 import { connect } from 'react-redux';
@@ -35,18 +36,21 @@ class AddCard extends Component{
 
   submit = () => {
 
+    Keyboard.dismiss();
+
     const { dispatch, deckTitle, navigation } = this.props;
+
+    navigation.goBack();
 
     dispatch(addCard(deckTitle,{ ...this.state }));
 
-    submitCard(deckTitle,{...this.state});
+    submitCard(deckTitle,{ ...this.state });
 
     this.setState({
       question: '',
       answer: ''
     });
 
-    navigation.goBack();
   };
 
   render(){

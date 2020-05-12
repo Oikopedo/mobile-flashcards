@@ -19,9 +19,9 @@ function DeckPage(props){
   
 
   onDelete = () => {
-    deleteDeckTitle(deck.title);
     navigation.goBack();
     dispatch(deleteDeck(deck.title));
+    deleteDeckTitle(deck.title);
   };
 
   onQuiz = () => {
