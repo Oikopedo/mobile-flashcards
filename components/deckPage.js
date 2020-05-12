@@ -6,7 +6,7 @@ import { deleteDeck } from '../actions';
 import { deleteDeckTitle } from '../utils/api';
 import { styles } from '../utils/style';
 
-function DeckPage({ dispatch, navigation, deckTitle }){
+function DeckPage({ deleteDeck, navigation, deckTitle }){
 
   const onAdd = () => {
     navigation.navigate(
@@ -18,7 +18,7 @@ function DeckPage({ dispatch, navigation, deckTitle }){
 
   const onDelete = () => {
     navigation.goBack();
-    dispatch(deleteDeck(deckTitle));
+    deleteDeck(deckTitle);
     deleteDeckTitle(deckTitle);
   };
 
@@ -55,4 +55,4 @@ function mapStateToProps(_, { route }){
   }
 }
 
-export default connect(mapStateToProps)(DeckPage);
+export default connect(mapStateToProps, { deleteDeck })(DeckPage);

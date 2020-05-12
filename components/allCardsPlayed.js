@@ -5,14 +5,17 @@ import { View, Text, TouchableOpacity} from 'react-native';
 import { resetQuiz } from '../actions/index';
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
 
-function AllCardsPlayed({ deck, dispatch, navigation, correctCounter }){
+function AllCardsPlayed({ deck, resetQuiz, navigation }){
+
+  const { correctCounter } = deck.quiz;
+  const  length = deck.questions.length; 
 
   useEffect(() => {
     clearLocalNotification().then(setLocalNotification);
   });
 
   const restart = () => {
-    dispatch(resetQuiz(deck.title));
+    resetQuiz(deck.title);
   }
 
   const toHome = () => {
@@ -26,7 +29,7 @@ function AllCardsPlayed({ deck, dispatch, navigation, correctCounter }){
   return(
     <View>
       <Text style={{ textAlign:"center", fontSize: 30, marginVertical: 30 }}>
-        You played all cards and you choose {correctCounter} out of {deck.questions.length} cards as correct
+        You played all cards and you choose {correctCounter} out of {length} cards as correct
       </Text>
       <TouchableOpacity onPress={restart} 
         style={{ ...styles.button, backgroundColor: 'green', paddingHorizontal: 25 }}>
@@ -44,12 +47,11 @@ function AllCardsPlayed({ deck, dispatch, navigation, correctCounter }){
   );
 }
 
-function mapStateToProps({ decks, quiz }, { deckTitle, navigation }){
+function mapStateToProps({ decks }, { deckTitle, navigation }){
   return ({
-    deck: decks.filter((deck) => (deck.title === deckTitle))[0],
-    correctCounter: quiz[deckTitle].correctCounter,
+    deck: decks[deckTitle],
     navigation,
   })
 }
 
-export default connect(mapStateToProps)(AllCardsPlayed);
+export default connect(mapStateToProps, { resetQuiz })(AllCardsPlayed);

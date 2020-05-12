@@ -1,6 +1,6 @@
 import { AsyncStorage } from "react-native"
 
-export const CARD_STORAGE_KEY = 'mobileCards:decksV2';
+export const CARD_STORAGE_KEY = 'mobileCards:decks';
 
 export function getDecks(){
   return AsyncStorage.getItem(CARD_STORAGE_KEY)

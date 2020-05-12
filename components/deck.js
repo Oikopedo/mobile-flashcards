@@ -19,9 +19,8 @@ function Deck ({ title, questions }) {
 }
 
 function mapStateToProps({ decks },{ deckTitle }){
-  const deck = decks.filter((deck) => (deck.title === deckTitle));
   return {
-    ...deck[0],
+    ...decks[deckTitle],
   }
 }
 

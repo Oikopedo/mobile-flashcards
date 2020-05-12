@@ -20,8 +20,8 @@ class Game extends Component{
     this.setState({
       showAnswer: false
     });
-    const { dispatch, deck } = this.props;
-    dispatch(quizQuestion(deck.title,value));
+    const { quizQuestion, deck } = this.props;
+    quizQuestion(deck.title,value);
   }
 
   incorrect = () => {
@@ -34,7 +34,8 @@ class Game extends Component{
   
   render(){
 
-    const { deck, counter } = this.props;
+    const { deck } = this.props;
+    const { counter } = deck.quiz
 
     return(
       <View>
@@ -64,11 +65,10 @@ class Game extends Component{
   }
 }
 
-function mapStateToProps({ decks, quiz }, { deckTitle }){
+function mapStateToProps({ decks }, { deckTitle }){
   return{
-    deck: decks.filter((deck) => (deckTitle === deck.title))[0],
-    counter: quiz[deckTitle].counter
+    deck: decks[deckTitle],
   }
 }
 
-export default connect(mapStateToProps)(Game);
+export default connect(mapStateToProps, { quizQuestion })(Game);

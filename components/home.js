@@ -6,39 +6,39 @@ import { connect } from 'react-redux';
 import { receiveDecks } from '../actions/index'
 import { styles } from '../utils/style';
 
-function Home({ dispatch, navigation, decks }){
+function Home({ receiveDecks, navigation, order }){
 
   useEffect(() => {
-    getDecks().then((decks) => dispatch(receiveDecks(decks)));
+    getDecks().then((decks) => receiveDecks(decks));
   }, []);
 
   const renderDeck = ({ item })  => {
     return (
       <TouchableOpacity onPress={() => navigation.navigate(
         'DeckPage',
-        { deckTitle: item.title }
+        { deckTitle: item }
       )}>
-        <Deck { ...item }/>
+        <Deck deckTitle={item}/>
       </TouchableOpacity>);
   };
-
+  
   return (
     <View style={{ flex:1 }}>
-      {decks.length === 0 ?
+      {order.length === 0 ?
       <View style={styles.generalView}>
         <Text style={{ fontSize:30, textAlign:"center" }}>There are no decks, please add a deck</Text>
       </View>:
       <View>
-        <FlatList data={decks} renderItem={renderDeck} keyExtractor={(item) => (item.title)}/>
+        <FlatList data={order} renderItem={renderDeck} keyExtractor={(item) => (item)}/>
       </View>}
     </View>
   );
 }
 
-function mapStateToProps({ decks }){
+function mapStateToProps({ order }){
   return{
-    decks,
+    order,
   };
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, { receiveDecks })(Home);

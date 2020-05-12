@@ -36,11 +36,11 @@ class AddCard extends Component{
 
     Keyboard.dismiss();
 
-    const { dispatch, deckTitle, navigation } = this.props;
+    const { addCard, deckTitle, navigation } = this.props;
 
     navigation.goBack();
 
-    dispatch(addCard(deckTitle,{ ...this.state }));
+    addCard(deckTitle,{ ...this.state });
 
     submitCard(deckTitle,{ ...this.state });
 
@@ -79,4 +79,4 @@ function mapStateToProps(_, { route }){
   }
 }
 
-export default connect(mapStateToProps)(AddCard);
+export default connect(mapStateToProps, { addCard })(AddCard);

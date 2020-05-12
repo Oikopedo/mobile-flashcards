@@ -7,75 +7,92 @@ import {
   RESET_QUIZ
 } from "../actions";
 
-export default function decks(state = { decks: [], quiz: {} }, action){
+export default function decks(state = { decks: {}, order: [] }, action){
   switch (action.type){
     case RECEIVE_DECKS:
-      const quiz = {}
-      Object.keys(action.decks).forEach((title) => {
-        quiz[title]= {
-          counter: 0, 
-          correctCounter: 0
+      if (action.decks){
+        const decksWithQuiz = {}
+        Object.entries(action.decks).forEach(([title, deck]) => {
+          decksWithQuiz[title]= {
+            ...deck,
+            quiz: {
+              counter: 0,
+              correctCounter: 0
+            }
+          };
+        });
+        return {
+          ...state,
+          decks: {
+            ...state.decks,
+            ...decksWithQuiz,
+          },
+          order: [ ...state.order, ...Object.keys(action.decks) ]
         };
-      })
-      return {
-        ...state,
-        decks: [ ...state.decks, ...Object.values(action.decks) ],
-        quiz:{
-          ...state.quiz, 
-          ...quiz,
-        }
-      };
+      }
+      return state;
     case ADD_DECK:
       return {
         ...state,
-        decks: [ ...state.decks, action.deck ],
-        quiz: {
-          ...state.quiz,
+        decks: {
+          ...state.decks,
           [action.deck.title]: {
-            counter: 0,
-            correctCounter: 0
-          }
-        }
+            ...action.deck,
+            quiz: {
+              counter: 0,
+              correctCounter: 0
+            }
+          },
+        },
+        order: [ ...state.order, action.deck.title ]
       };
     case DELETE_DECK:
       return {
         ...state,
-        decks: state.decks.filter((deck) => (deck.title !== action.title)),
-        quiz: {
-          ...state.quiz,
+        decks: {
+          ...state.decks,
           [action.title]: undefined
-        }
+        },
+        order: state.order.filter((title) => (action.title !== title))
       };
     case ADD_CARD:
       return {
         ...state,
-        decks: state.decks.map((deck) => (deck.title === action.title ? { 
-          ...deck,
-          questions: [ ...deck.questions, action.card ]
-        } : deck ))
-      };
-    case QUIZ_QUESTION:
-      return{
-        ...state,
-        quiz: {
-          ...state.quiz,
+        decks: {
+          ...state.decks,
           [action.title]: {
-            counter: state.quiz[action.title].counter+1,
-            correctCounter: action.correct ? 
-              state.quiz[action.title].correctCounter+1 : 
-              state.quiz[action.title].correctCounter
+            ...state.decks[action.title],
+            questions: [ ...state.decks[action.title].questions, action.card]
           }
         }
       };
-      
+    case QUIZ_QUESTION:
+      return {
+        ...state,
+        decks: {
+          ...state.decks,
+          [action.title]: {
+            ...state.decks[action.title],
+            quiz: {
+              counter: state.decks[action.title].quiz.counter + 1,
+              correctCounter: action.correct ? 
+                state.decks[action.title].quiz.correctCounter + 1 :
+                state.decks[action.title].quiz.correctCounter
+            }
+          }
+        }
+      };
     case RESET_QUIZ:
       return {
         ...state,
-        quiz: {
-          ...state.quiz,
+        decks: {
+          ...state.decks,
           [action.title]: {
-            counter: 0,
-            correctCounter: 0
+            ...state.decks[action.title],
+            quiz: {
+              counter: 0,
+              correctCounter: 0
+            }
           }
         }
       };

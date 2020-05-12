@@ -19,7 +19,7 @@ class AddDeck extends Component{
 
   submit = () => {
 
-    const { dispatch, navigation, quiz } = this.props;
+    const { addDeck, navigation, decks } = this.props;
     const { title } = this.state;
 
     if (title === ''){
@@ -27,7 +27,7 @@ class AddDeck extends Component{
       return;
     }
 
-    if (quiz[title]){
+    if (decks[title]){
       alert("This deck already exists, please choose another title");
       return;
     }
@@ -36,7 +36,7 @@ class AddDeck extends Component{
 
     navigation.goBack();
 
-    dispatch(addDeck(title));
+    addDeck(title);
 
     saveDeckTitle(title);
 
@@ -65,10 +65,10 @@ class AddDeck extends Component{
   }
 }
 
-function mapStateToProps({ quiz }){
+function mapStateToProps({ decks }){
   return {
-    quiz,
+    decks,
   };
 }
 
-export default connect(mapStateToProps)(AddDeck);
+export default connect(mapStateToProps, { addDeck })(AddDeck);

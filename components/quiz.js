@@ -22,11 +22,12 @@ function Quiz({ deckTitle, navigation, length, counter }){
   );
 }
 
-function mapStateToProps({ decks, quiz }, { route }){
+function mapStateToProps({ decks }, { route }){
   const { deckTitle } = route.params;
+  const deck = decks[deckTitle];
   return {
-    length: decks.filter((deck) => (deck.title === deckTitle))[0].questions.length,
-    counter: quiz[deckTitle].counter,
+    length: deck.questions.length,
+    counter: deck.quiz.counter,
     deckTitle,
   };
 }
