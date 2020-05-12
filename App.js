@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -12,6 +12,7 @@ import AddDeck from './components/addDeck';
 import AddCard from './components/addCard';
 import DeckPage from './components/deckPage';
 import Quiz from './components/quiz';
+import { setLocalNotification } from './utils/helpers';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -43,6 +44,10 @@ function HomeTab(){
 }
 
 export default function App() {
+  
+  useEffect(() => {
+    setLocalNotification();
+  },[]);
 
   return (
     <Provider store={createStore(reducer)}>

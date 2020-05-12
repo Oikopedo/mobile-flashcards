@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
     padding: 5,
     margin: 5,
     height: 45,
-    paddingHorizontal:20,
-    borderRadius:30,
+    paddingHorizontal: 20,
+    borderRadius: 30,
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center'
@@ -17,20 +17,20 @@ export const styles = StyleSheet.create({
     textAlign: 'center'
   },
   generalView: {
-    flex:1,
-    padding:5,
-    justifyContent:'center'
+    flex: 1,
+    padding: 5,
+    justifyContent: 'center'
   },
   inputStyle: {
     padding: 5,
-    margin:5,
-    marginBottom:30,
+    margin: 5,
+    marginBottom: 30,
     borderRadius: 8,
     borderColor: 'black',
-    borderWidth:1,
-    height:50,
-    fontSize:16,
-    justifyContent:'center',
-    alignItems:'center'
+    borderWidth: 1,
+    height: 50,
+    fontSize: 16,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })

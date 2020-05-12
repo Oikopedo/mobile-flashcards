@@ -42,7 +42,9 @@ export default function decks(state = {}, action){
           ...state[action.title],
           quiz: state[action.title].quiz ? {
             counter: state[action.title].quiz.counter + 1,
-            correctCounter: action.correct ? state[action.title].quiz.correctCounter + 1 : state[action.title].quiz.correctCounter
+            correctCounter: action.correct ? 
+              state[action.title].quiz.correctCounter + 1 : 
+              state[action.title].quiz.correctCounter
           } : {
             counter: 1,
             correctCounter: action.correct ? 1 : 0

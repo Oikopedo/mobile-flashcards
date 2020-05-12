@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { styles } from '../utils/style';
 import { View, Text, TouchableOpacity} from 'react-native';
 import { removeQuiz } from '../actions/index';
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
 
 function AllCardsPlayed(props){
+
+  useEffect(() => {
+    clearLocalNotification().then(setLocalNotification);
+  });
   
   const { deck, dispatch, navigation } = props;
 
