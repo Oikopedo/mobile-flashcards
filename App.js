@@ -54,7 +54,7 @@ export default function App() {
       <View style={{ flex: 1 }}>
         <CustomStatusBar backgroundColor='purple' barStyle='light-content'/>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={HomeTab} 
               options={{ headerShown: false }}/>
             <Stack.Screen name="DeckPage" component={DeckPage} 
