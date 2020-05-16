@@ -8,7 +8,7 @@ import Game from './game';
 function Quiz({ deckTitle, navigation, length, counter }){
 
   return(
-    <View style={styles.generalView}>
+    <View style={{...styles.generalView,justifyContent:"flex-start"}}>
       {
         length === 0 ?
           <Text style={{ textAlign: "center", fontSize: 30 }}>
