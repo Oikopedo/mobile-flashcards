@@ -20,10 +20,12 @@ function AllCardsPlayed({ deck, resetQuiz, navigation }){
 
   const toHome = () => {
     navigation.navigate('Home');
+    resetQuiz(deck.title);
   }
 
   const back = () => {
     navigation.goBack();
+    resetQuiz(deck.title);
   }
 
   return(

@@ -7,17 +7,20 @@ import { quizQuestion } from '../actions/index';
 class Game extends Component{
 
   state ={
+    clckCounter: 0,
     showAnswer: false,
   };
 
   switch = () => {
     this.setState((currentState) =>({
+      clckCounter: currentState.clckCounter+1,
       showAnswer: !currentState.showAnswer
     }));
   };
 
   answer = (value) => {
     this.setState({
+      clckCounter: 0,
       showAnswer: false
     });
     const { quizQuestion, deck } = this.props;
@@ -52,14 +55,17 @@ class Game extends Component{
             {!this.state.showAnswer ? 'Show Answer': 'Show Question'}
           </Text>
         </TouchableOpacity >
-        <TouchableOpacity onPress={this.correct} 
-          style={{...styles.button,backgroundColor:'green',paddingHorizontal:30}}>
-          <Text style={{...styles.buttonText,fontSize:30}}>Correct</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.incorrect} 
-          style={{...styles.button,backgroundColor:'red'}}>
-          <Text style={{fontSize:30}}>Incorrect</Text>
-        </TouchableOpacity>
+        {this.state.clckCounter>0 &&
+        <View>
+          <TouchableOpacity onPress={this.correct}
+            style={{...styles.button,backgroundColor:'green',paddingHorizontal:30}}>
+            <Text style={{...styles.buttonText,fontSize:30}}>Correct</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.incorrect}
+            style={{...styles.button,backgroundColor:'red'}}>
+            <Text style={{fontSize:30}}>Incorrect</Text>
+          </TouchableOpacity>
+        </View>}
       </View>
     );
   }
